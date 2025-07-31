@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\CartItemRepository;
+use App\Entity\Product;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CartItemRepository::class)]
@@ -14,7 +15,7 @@ class CartItem
     private ?int $id = null;
 
     #[ORM\Column]
-    private ?int $qantity = null;
+    private ?int $quantity = null;
 
     #[ORM\ManyToOne(inversedBy: 'cartItems')]
     #[ORM\JoinColumn(nullable: false)]
@@ -22,21 +23,26 @@ class CartItem
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Product $product = null;
+    private Product $product;
+
+    public function __construct(Product $product, int $quantity){
+        $this->product = $product;
+        $this->quantity = $quantity;
+    }
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getQantity(): ?int
+    public function getQuantity(): ?int
     {
-        return $this->qantity;
+        return $this->quantity;
     }
 
-    public function setQantity(int $qantity): static
+    public function setQuantity(int $quantity): static
     {
-        $this->qantity = $qantity;
+        $this->quantity = $quantity;
 
         return $this;
     }
@@ -53,12 +59,12 @@ class CartItem
         return $this;
     }
 
-    public function getProduct(): ?Product
+    public function getProduct(): Product
     {
         return $this->product;
     }
 
-    public function setProduct(?Product $product): static
+    public function setProduct(Product $product): static
     {
         $this->product = $product;
 
