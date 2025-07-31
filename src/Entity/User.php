@@ -49,6 +49,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Order::class, mappedBy: 'owner')]
     private Collection $orders;
 
+    #[ORM\Column]
+    private bool $isApiAuthorized = false;
+
     public function __construct()
     {
         $this->orders = new ArrayCollection();
@@ -125,7 +128,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $data = (array) $this;
         $data["\0" . self::class . "\0password"] = hash('crc32c', $this->password);
-        
+
         return $data;
     }
 
@@ -202,6 +205,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $order->setOwner(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isApiAuthorized(): bool
+    {
+        return $this->isApiAuthorized;
+    }
+
+    public function setIsApiAuthorized(bool $isApiAuthorized): static
+    {
+        $this->isApiAuthorized = $isApiAuthorized;
 
         return $this;
     }
