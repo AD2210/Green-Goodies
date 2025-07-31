@@ -17,7 +17,7 @@ class OrderItem extends AbstractItem
         return $this->orderRef;
     }
 
-    public function setPurchase(?Order $orderRef): static
+    public function setOrderRef(?Order $orderRef): static
     {
         $this->orderRef = $orderRef;
         return $this;
