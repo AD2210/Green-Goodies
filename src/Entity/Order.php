@@ -71,7 +71,7 @@ class Order
         return $this->orderItems;
     }
 
-    public function addOrderItem(OrderItem $orderItem): static
+    public function addOrderItem(OrderItem $orderItem): static // passer CartItem au lieu
     {
         if (!$this->orderItems->contains($orderItem)) {
             $this->orderItems->add($orderItem);
