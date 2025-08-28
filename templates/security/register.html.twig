@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription{% endblock %}
+
+{% block body %}
+<section class="form-page">
+    <div class="form-image" style="background-image:url('{{ asset('images/register.jpg') }}');"></div>
+    <div class="form-container">
+        <h1>Inscription</h1>
+        <p>Tous les champs sont obligatoires.</p>
+        <form method="post" action="{{ path('app_register') }}">
+            <label for="lastName">Nom</label>
+            <input type="text" id="lastName" name="lastName" required>
+            <label for="firstName">Prénom</label>
+            <input type="text" id="firstName" name="firstName" required>
+            <label for="email">Adresse email</label>
+            <input type="email" id="email" name="email" required>
+            <label for="password">Mot de passe</label>
+            <input type="password" id="password" name="password" required>
+            <label for="password_confirmation">Confirmation mot de passe</label>
+            <input type="password" id="password_confirmation" name="password_confirmation" required>
+            <div>
+                <input type="checkbox" id="terms" name="terms" required>
+                <label for="terms">J’accepte les CGU de GreenGoodies</label>
+            </div>
+            <button class="btn-primary" type="submit">S’inscrire</button>
+        </form>
+        <div class="helper-links">
+            Déjà un compte ? <a href="{{ path('app_login') }}">Se connecter</a>
+        </div>
+    </div>
+</section>
+{% endblock %}
