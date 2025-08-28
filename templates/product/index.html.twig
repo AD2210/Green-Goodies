@@ -17,11 +17,11 @@
     <div class="product-grid">
         {% for product in products %}
             <div class="product-card">
-                <img src="{{ asset('images/' ~ product.image) }}" alt="{{ product.name }}">
+                <img src="{{ asset('images/' ~ product.picture) }}" alt="{{ product.name }}">
                 <div class="product-name">{{ product.name }}</div>
-                <div class="product-tagline">{{ product.tagline }}</div>
+                <div class="product-tagline">{{ product.shortDescription }}</div>
                 <div class="product-price">{{ product.price|number_format(2, ',', ' ') }} €</div>
-                <a class="product-link" href="{{ path('product_show', {id: product.id}) }}">Voir le produit</a>
+                <a class="product-link" href="{{ path('app_product_detail', {id: product.id}) }}">Voir le produit</a>
             </div>
         {% else %}
             <p>Aucun produit disponible pour le moment.</p>

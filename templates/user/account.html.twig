@@ -19,7 +19,7 @@
             {% for order in orders %}
                 <tr>
                     <td>{{ '%02d'|format(loop.index) }}</td>
-                    <td>{{ order.date|date('d/m/Y') }}</td>
+                    <td>{{ order.createdAt|date('d/m/Y') }}</td>
                     <td>{{ order.total|number_format(2, ',', ' ') }} €</td>
                 </tr>
             {% else %}
@@ -32,13 +32,14 @@
     </div>
     <div class="account-card">
         <h2>Mon accès API</h2>
-        <form action="{{ path('account_enable_api') }}" method="post">
+        <form action="{{ path('app_account_api_authorize') }}" method="post">
             <button type="submit" class="btn-primary">Activer mon accès API</button>
         </form>
     </div>
     <div class="account-card">
         <h2>Supprimer mon compte</h2>
-        <form action="{{ path('account_delete') }}" method="post" onsubmit="return confirm('Êtes‑vous sûr de vouloir supprimer votre compte ?');">
+        <form action="{{ path('app_account_delete') }}" method="post" onsubmit="return confirm('Êtes‑vous sûr de vouloir supprimer votre compte ?');">
+            {# @todo créer la route pour supprimer son compte #}
             <button type="submit" class="btn-primary">Supprimer mon compte</button>
         </form>
     </div>
