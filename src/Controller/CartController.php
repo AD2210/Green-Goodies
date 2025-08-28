@@ -21,7 +21,7 @@ final class CartController extends AbstractController
 
         //@todo ajouter le service calcul de prix total (servira pour cart et order)
 
-        return $this->render('cart/index.html.twig', [
+        return $this->render('cart/cart.html.twig', [
             'cartItems' => $cartItems,
         ]);
     }

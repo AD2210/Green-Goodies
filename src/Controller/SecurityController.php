@@ -69,7 +69,7 @@ class SecurityController extends AbstractController
                     ->from(new Address('mailer@grenn-goodies.com', 'Mail Bot'))
                     ->to((string) $user->getEmail())
                     ->subject('Please Confirm your Email')
-                    ->htmlTemplate('registration/confirmation_email.html.twig')
+                    ->htmlTemplate('security/confirmation_email.html.twig')
             );
 
             // do anything else you need here, like send an email
@@ -77,7 +77,7 @@ class SecurityController extends AbstractController
             return $security->login($user, 'form_login', 'main');
         }
 
-        return $this->render('registration/register.html.twig', [
+        return $this->render('security/register.html.twig', [
             'registrationForm' => $form,
         ]);
     }

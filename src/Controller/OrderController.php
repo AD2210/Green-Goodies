@@ -22,9 +22,7 @@ final class OrderController extends AbstractController
         $order->addOrderItem($cart->getCartItems()); // necessite une convertion à traiter dans un service
 
 
-        return $this->render('order/index.html.twig', [
-            'controller_name' => 'OrderController',
-        ]);
+        return $this->redirectToRoute('app_products');
     }
 
     #[Route('/order/confirm', name: 'app_order_confirm')]
