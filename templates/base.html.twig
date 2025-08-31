@@ -9,13 +9,10 @@
         {% block importmap %}{{ importmap('app') }}{% endblock %}
     {% endblock %}
 </head>
-<body>
+<body class="container">
 <header>
-    <div class="container header-container">
-        <div class="logo">
-            <span class="logo-box">G</span>
-            <span class="logo-text">Green Goodies</span>
-        </div>
+    <div class="header-container">
+        <img src="{{ asset('images/Logo.png') }}" alt="Green Goodies">
         <nav>
             <ul class="nav-links">
                 <li><a href="{{ path('app_products') }}">Nos produits</a></li>

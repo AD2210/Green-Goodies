@@ -7,9 +7,9 @@
     <div class="hero-text">
         <h1>Bienvenue</h1>
         <p>Découvrez notre univers de produits durables et éthiques pour une consommation responsable.</p>
-        <p>Retrouvez des articles d’hygiène & beauté, des accessoires & boissons et du prêt à porter.</p>
+        <p>Retrouvez des articles d’hygiène & beauté, des accessoires & boissons et du prêt à porter.</p>
     </div>
-    <div class="hero-image" style="background-image:url('{{ asset('images/hero.jpg') }}');"></div>
+    <img class="" src="{{ asset('images/Less.png') }}" alt="Conviction">
 </section>
 
 <section class="products-section">
@@ -17,7 +17,7 @@
     <div class="product-grid">
         {% for product in products %}
             <div class="product-card">
-                <img src="{{ asset('images/' ~ product.picture) }}" alt="{{ product.name }}">
+                <img src="{{ product.picture }}" alt="{{ product.name }}">
                 <div class="product-name">{{ product.name }}</div>
                 <div class="product-tagline">{{ product.shortDescription }}</div>
                 <div class="product-price">{{ product.price|number_format(2, ',', ' ') }} €</div>
@@ -35,11 +35,11 @@
         <p>Chez GreenGoodies, nous croyons en un monde où le commerce peut être synonyme de bien‑être pour la planète et ses habitants.
            Notre mission est de vous proposer une sélection rigoureuse de produits qui allient qualité, durabilité et éthique.</p>
     </div>
-    <div class="image" style="background-image:url('{{ asset('images/conviction.jpg') }}');"></div>
+    <img src="{{ asset('images/tree.png') }}" alt="Conviction">
 </section>
 
 <section class="values-section">
-    <div class="image" style="background-image:url('{{ asset('images/values.jpg') }}');"></div>
+    <img src="{{ asset('images/garbage.png') }}" alt="Conviction">
     <div class="text">
         <h2>Nos valeurs</h2>
         <p><strong>Durabilité :</strong> Nous sélectionnons soigneusement des produits qui respectent l’environnement et favorisent la durabilité.</p>
