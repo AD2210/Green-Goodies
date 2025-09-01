@@ -3,15 +3,18 @@
 {% block title %}{{ product.name }}{% endblock %}
 
 {% block body %}
-<section class="product-detail">
-    <div class="product-detail-image">
-        <img src="{{ asset('images/' ~ product.picture) }}" alt="{{ product.name }}">
-    </div>
-    <div class="product-detail-info">
-        <h1>{{ product.name }}</h1>
-        <div class="price">{{ product.price|number_format(2, ',', ' ') }} €</div>
-        <div class="description">{{ product.longDescription|raw }}</div>
-        <a href="{{ path('app_cart_add', { id: product.id }) }}" class="btn-primary">Ajouter au panier</a>
-    </div>
-</section>
+    <section class="product-detail container">
+        <div class="product-detail-image">
+            <img src="{{ product.picture }}" alt="{{ product.name }}">
+        </div>
+        <div class="product-detail-info">
+            <h1>{{ product.name }}</h1>
+            <div class="price">{{ product.price|number_format(2, ',', ' ') }} €</div>
+            <span>Description</span>
+            <div class="description">
+                {{ product.longDescription }}
+            </div>
+            <a href="{{ path('app_cart_add', { id: product.id }) }}" class="btn-primary">Ajouter au panier</a>
+        </div>
+    </section>
 {% endblock %}

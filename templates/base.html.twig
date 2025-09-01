@@ -9,22 +9,24 @@
         {% block importmap %}{{ importmap('app') }}{% endblock %}
     {% endblock %}
 </head>
-<body class="container">
+<body>
 <header>
-    <div class="header-container">
-        <img src="{{ asset('images/Logo.png') }}" alt="Green Goodies">
-        <nav>
-            <ul class="nav-links">
-                <li><a href="{{ path('app_products') }}">Nos produits</a></li>
-                <li><a href="{{ path('app_cart') }}">Mon panier</a></li>
-                {% if app.user %}
-                    <li><a href="{{ path('app_account') }}">Mon compte</a></li>
-                    <li><a href="{{ path('app_logout') }}">Déconnexion</a></li>
-                {% else %}
-                    <li><a href="{{ path('app_login') }}">Connexion</a></li>
-                {% endif %}
-            </ul>
-        </nav>
+    <div class="container">
+        <div class="header-container">
+            <img src="{{ asset('images/Logo.png') }}" alt="Green Goodies">
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="{{ path('app_products') }}">Nos produits</a></li>
+                    <li><a href="{{ path('app_cart') }}">Mon panier</a></li>
+                    {% if app.user %}
+                        <li><a href="{{ path('app_account') }}">Mon compte</a></li>
+                        <li><a href="{{ path('app_logout') }}">Déconnexion</a></li>
+                    {% else %}
+                        <li><a href="{{ path('app_login') }}">Connexion</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
     </div>
 </header>
 
@@ -34,7 +36,7 @@
 
 <footer>
     <div class="container footer-container">
-        <p>© GreenGoodies – {{ "now"|date("Y") }}</p>
+        <p>© GreenGoodies – {{ "now"|date("Y") }}</p>
     </div>
 </footer>
 </body>

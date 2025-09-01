@@ -4,9 +4,10 @@
     --color-secondary: #E8F0E3;    /* pale green used in hero */
     --color-bg: #FFFDF7;       /* light beige background */
     --color-text: #333333;         /* primary text colour */
-    --color-muted: #7a7a7a;        /* secondary text */
+    --color-muted: #666666;        /* secondary text */
     --color-button: #5b5b5b;       /* button background */
     --font-main: 'inter', sans-serif;
+    box-sizing: border-box;
 }
 
 body {
@@ -18,20 +19,20 @@ body {
 }
 
 .container {
-    width: 100%;
     max-width: 1440px;
     margin: 0 auto;
 }
 
 header {
-    background-color: #F6F5F0;
-    padding: 31px 100px;
+    background-color: var( --color-bg);
+    border-bottom: 1px solid #F6F5F0;
 }
 
 .header-container {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    padding: 31px 100px;
 }
 
 .nav-links {
@@ -55,11 +56,14 @@ header {
 }
 
 /* Hero section */
-.hero {
+.hero-section {
+    background-color: var(--color-secondary);
+}
+
+.hero-section .container {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: var(--color-secondary);
 }
 
 .hero-text {
@@ -94,13 +98,14 @@ header {
     font-size: 14px;
     font-weight: 500;
     text-transform: uppercase;
-    padding: 37px 100px;
+    padding: 32px 100px;
+    margin: 0;
 }
 
 .product-grid {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: start;
 }
 
 .product-card {
@@ -128,31 +133,48 @@ header {
 }
 
 .product-card .product-price {
-    font-size: 16px;
-    margin-top: 8px;
+    font-size: 14px;
+    font-weight: 400;
+    padding: 16px 0;
 }
 
 .product-card .product-link {
-    margin-top: 12px;
+    padding: 32px 0;
     display: inline-block;
-    color: var(--color-primary);
-    text-decoration: underline;
+    color: black;
+    text-decoration: none;
     font-size: 14px;
+    font-weight: 400;
 }
 
 /* Conviction and values sections */
-.conviction-section,
-.values-section {
+.conviction-section{
+    background-color: #EBE3D3;
+}
+
+.values-section{
+    background-color: var(--color-secondary);
+}
+
+.conviction-section .container,
+.values-section .container{
     display: flex;
-    align-items: stretch;
+    align-items: flex-end;
     min-height: 400px;
 }
 
 .conviction-section .text,
 .values-section .text {
     width: 60%;
-    padding: 60px 80px;
-    background-color: var(--color-accent);
+    padding: 40px;
+}
+
+.conviction-section .text{
+    padding-right: 500px;
+}
+
+.values-section .text{
+    padding-left: 500px;
 }
 
 .conviction-section .image,
@@ -164,77 +186,109 @@ header {
 
 .conviction-section h2,
 .values-section h2 {
-    font-size: 24px;
+    font-size: 20px;
     margin-bottom: 20px;
+    font-weight: 400;
+    text-transform: uppercase;
 }
 
 .conviction-section p,
 .values-section p {
-    font-size: 16px;
-    line-height: 1.5;
+    font-size: 14px;
+    font-weight: 300;
     margin-bottom: 12px;
 }
 
-/* Separator bar for conviction section */
-.conviction-section.bar {
-    height: 20px;
-    background-color: var(--color-primary);
+/* Footer */
+footer {
+    background-color: #F6F5F0;
+    padding: 32px 0;
+}
+
+footer p{
+    margin: 0;
+    padding-right: 100px;
+}
+
+.footer-container {
+    text-align: end;
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--color-muted);
 }
 
 /* Product detail page */
 .product-detail {
     display: flex;
-    padding: 60px 80px;
-    gap: 60px;
+    padding-bottom: 220px;
 }
 
 .product-detail-image {
-    width: 50%;
+    width: 51%;
 }
 
 .product-detail-image img {
-    width: 100%;
+    width: 734px;
     height: auto;
-    border-radius: 4px;
+    max-height: 686px;
+    object-fit: cover;
 }
 
 .product-detail-info {
-    width: 50%;
+    width: 49%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 80px 125px 0;
 }
 
 .product-detail-info h1 {
-    font-size: 32px;
-    margin-bottom: 10px;
-    font-weight: 600;
+    font-size: 20px;
+    font-weight: 500;
+    margin: 0;
+    margin-bottom: 24px;
 }
 
 .product-detail-info .price {
-    font-size: 28px;
-    margin-bottom: 20px;
+    font-size: 30px;
+    font-weight: 300;
+    margin-bottom: 36px;
 }
 
+.product-detail-info span {
+    font-size: 10px;
+    font-weight: 400;
+    color: var(--color-muted);
+    display: block;
+    margin-bottom: 10px;
+}
+
+
 .product-detail-info .description {
-    font-size: 16px;
-    line-height: 1.5;
-    margin-bottom: 40px;
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--color-muted);
+    white-space: pre-line;
+    padding-bottom: 64px;
+
 }
 
 /* Button component */
 .btn-primary {
-    display: inline-block;
-    padding: 14px 40px;
+    display: block;
+    padding: 30px;
     background-color: var(--color-button);
     color: #fff;
     text-align: center;
     text-decoration: none;
-    font-size: 16px;
-    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 400;
     cursor: pointer;
-    border: none;
+
 }
 
 .btn-primary:hover {
-    background-color: #3e3e3e;
+    background-color: black;
 }
 
 /* Login and register forms */
@@ -433,17 +487,4 @@ header {
     display: block;
     color: var(--color-muted);
     margin-top: 4px;
-}
-
-/* Footer */
-footer {
-    background-color: #fcfbf7;
-    padding: 20px 0;
-    margin-top: 60px;
-}
-
-.footer-container {
-    text-align: center;
-    font-size: 14px;
-    color: var(--color-muted);
 }

@@ -3,48 +3,63 @@
 {% block title %}Accueil{% endblock %}
 
 {% block body %}
-<section class="hero">
-    <div class="hero-text">
-        <h1>Bienvenue</h1>
-        <p>Découvrez notre univers de produits durables et éthiques pour une consommation responsable.</p>
-        <p>Retrouvez des articles d’hygiène & beauté, des accessoires & boissons et du prêt à porter.</p>
-    </div>
-    <img class="" src="{{ asset('images/Less.png') }}" alt="Conviction">
-</section>
-
-<section class="products-section">
-    <h2>Nos produits</h2>
-    <div class="product-grid">
-        {% for product in products %}
-            <div class="product-card">
-                <img src="{{ product.picture }}" alt="{{ product.name }}">
-                <div class="product-name">{{ product.name }}</div>
-                <div class="product-tagline">{{ product.shortDescription }}</div>
-                <div class="product-price">{{ product.price|number_format(2, ',', ' ') }} €</div>
-                <a class="product-link" href="{{ path('app_product_detail', {id: product.id}) }}">Voir le produit</a>
+    <section class="hero-section">
+        <div class="container">
+            <div class="hero-text">
+                <h1>Bienvenue</h1>
+                <p>Découvrez notre univers de produits durables et éthiques pour une consommation responsable.</p>
+                <p>Retrouvez des articles d’hygiène & beauté, des accessoires & boissons et du prêt à porter.</p>
             </div>
-        {% else %}
-            <p>Aucun produit disponible pour le moment.</p>
-        {% endfor %}
-    </div>
-</section>
+            <img class="" src="{{ asset('images/Less.png') }}" alt="Conviction">
+        </div>
+    </section>
 
-<section class="conviction-section">
-    <div class="text">
-        <h2>Notre conviction</h2>
-        <p>Chez GreenGoodies, nous croyons en un monde où le commerce peut être synonyme de bien‑être pour la planète et ses habitants.
-           Notre mission est de vous proposer une sélection rigoureuse de produits qui allient qualité, durabilité et éthique.</p>
-    </div>
-    <img src="{{ asset('images/tree.png') }}" alt="Conviction">
-</section>
+    <section class="products-section">
+        <div class="container">
+            <h2>Nos produits</h2>
+            <div class="product-grid">
+                {% for product in products %}
+                    <div class="product-card">
+                        <img src="{{ product.picture }}" alt="{{ product.name }}">
+                        <div class="product-name">{{ product.name }}</div>
+                        <div class="product-tagline">{{ product.shortDescription }}</div>
+                        <div class="product-price">{{ product.price|number_format(2, ',', ' ') }} €</div>
+                        <a class="product-link" href="{{ path('app_product_detail', {id: product.id}) }}">Voir le
+                            produit</a>
+                    </div>
+                {% else %}
+                    <p>Aucun produit disponible pour le moment.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
 
-<section class="values-section">
-    <img src="{{ asset('images/garbage.png') }}" alt="Conviction">
-    <div class="text">
-        <h2>Nos valeurs</h2>
-        <p><strong>Durabilité :</strong> Nous sélectionnons soigneusement des produits qui respectent l’environnement et favorisent la durabilité.</p>
-        <p><strong>Éthique :</strong> Nous nous engageons à travailler avec des partenaires et des fournisseurs qui partagent nos valeurs éthiques.</p>
-        <p><strong>Écologie :</strong> Nous encourageons des pratiques respectueuses de l’écosystème et privilégions les matériaux écologiques.</p>
-    </div>
-</section>
+    <section class="conviction-section">
+        <div class="container">
+            <div class="text">
+                <h2>Notre conviction</h2>
+                <p>Chez GreenGoodies, nous croyons en un monde où le commerce peut être synonyme de bien‑être pour la
+                    planète et ses habitants.
+                    Notre mission est de vous proposer une sélection rigoureuse de produits qui allient qualité,
+                    durabilité
+                    et éthique.</p>
+            </div>
+            <img src="{{ asset('images/tree.png') }}" alt="Conviction">
+        </div>
+    </section>
+
+    <section class="values-section">
+        <div class="container">
+            <img src="{{ asset('images/garbage.png') }}" alt="Conviction">
+            <div class="text">
+                <h2>Nos valeurs</h2>
+                <p><strong>Durabilité :</strong>Nous sélectionnons soigneusement des produits qui respectent
+                    l’environnement et favorisent la durabilité. <br>
+                    <strong>Éthique :</strong>Nous nous engageons à travailler avec des partenaires et des fournisseurs
+                    qui partagent nos valeurs éthiques.<br>
+                    <strong>Écologie :</strong>Nous encourageons des pratiques respectueuses de l’écosystème et
+                    privilégions les matériaux écologiques.</p>
+            </div>
+        </div>
+    </section>
 {% endblock %}
