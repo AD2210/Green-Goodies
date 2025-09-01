@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\LoginType;
 use App\Form\RegistrationFormType;
 use App\Repository\UserRepository;
 use App\Security\EmailVerifier;
@@ -26,7 +27,7 @@ class SecurityController extends AbstractController
     {
     }
     #[Route(path: '/login', name: 'app_login')]
-    public function login(AuthenticationUtils $authenticationUtils): Response
+    public function login(AuthenticationUtils $authenticationUtils, Request $request): Response
     {
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
@@ -34,7 +35,15 @@ class SecurityController extends AbstractController
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
+        $form = $this->createForm(LoginType::class);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            return $this->redirectToRoute('app_account');
+        }
+
         return $this->render('security/login.html.twig', [
+            'form' => $form,
             'last_username' => $lastUsername,
             'error' => $error,
         ]);
