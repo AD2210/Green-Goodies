@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Repository\OrderRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -29,6 +30,7 @@ final class UserController extends AbstractController
     {
         // @todo ajouter is granted pour géré l'accès
 
+        /** @var User $user */
         $user = $this->getUser();
 
         // toggle bool isApiAuthorized

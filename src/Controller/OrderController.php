@@ -10,10 +10,12 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\Envelope;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 final class OrderController extends AbstractController
 {
     #[Route('/order/create', name: 'app_order_create')]
+    #[IsGranted('ROLE_USER')]
     public function createOrder(EntityManagerInterface $em, CartRepository $cartRepository): Response
     {
         $order = new Order();
