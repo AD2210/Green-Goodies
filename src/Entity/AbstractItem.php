@@ -47,8 +47,8 @@ abstract class AbstractItem
         return $this;
     }
 
-    public function getTotal($price): float
+    public function getTotal(): float
     {
-        return $this->quantity * $price;
+        return $this->quantity * $this->product->getPrice();
     }
 }

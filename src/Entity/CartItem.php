@@ -12,6 +12,11 @@ class CartItem extends AbstractItem
     #[ORM\JoinColumn(nullable: false)]
     private ?Cart $cart = null;
 
+    public function __construct(Product $product, int $quantity = 1){
+        $this->product = $product;
+        $this->quantity = $quantity;
+    }
+
     public function getCart(): ?Cart
     {
         return $this->cart;

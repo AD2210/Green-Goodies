@@ -22,7 +22,7 @@ class Cart
     /**
      * @var Collection<int, CartItem>
      */
-    #[ORM\OneToMany(targetEntity: CartItem::class, mappedBy: 'cart', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: CartItem::class, mappedBy: 'cart', orphanRemoval: true, cascade: ['persist', 'remove'])]
     private Collection $cartItems;
 
     public function __construct()
@@ -75,5 +75,13 @@ class Cart
         }
 
         return $this;
+    }
+
+    public function getTotal(): float{
+        $total = 0;
+        foreach($this->cartItems as $item){
+            $total += $item->getTotal();
+        }
+        return $total;
     }
 }
