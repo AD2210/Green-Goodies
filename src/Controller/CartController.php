@@ -41,15 +41,20 @@ final class CartController extends AbstractController
 
         //On parcours les items du panier
         $cardtItems = $cart->getCartItems();
+
         if (empty($cardtItems->toArray())) {
             $cart->addCartItem(new CartItem($product, 1)); // si le panier est vide, on ajoute le produit au panier
         } else {
+            $checkItem = false;
             foreach ($cardtItems as $item) {
                 if ($item->getProduct() === $product) {
                     $item->setQuantity($item->getQuantity() + 1); // si le produit existe, on incrémente la quantité
-                } else {
-                    $cart->addCartItem(new CartItem($product, 1)); // sinon, on ajoute le produit au panier
+                    $checkItem = true;
+                    break;
                 }
+            }
+            if (!$checkItem) {
+                $cart->addCartItem(new CartItem($product, 1));
             }
         }
 
