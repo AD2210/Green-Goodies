@@ -19,7 +19,6 @@ final class CartController extends AbstractController
 
         $cart = $repository->findOneBy(['owner' => $this->getUser()]);
         $cartItems = $cart?->getCartItems();
-        dump($cart, $cartItems);
 
         //@todo ajouter le service calcul de prix total (servira pour cart et order)
 
@@ -40,8 +39,20 @@ final class CartController extends AbstractController
             $em->persist($cart);
         }
 
-        //on ajoute le produit au panier
-        $cart->addCartItem(new CartItem($product, 1));
+        //On parcours les items du panier
+        $cardtItems = $cart->getCartItems();
+        if (empty($cardtItems->toArray())) {
+            $cart->addCartItem(new CartItem($product, 1)); // si le panier est vide, on ajoute le produit au panier
+        } else {
+            foreach ($cardtItems as $item) {
+                if ($item->getProduct() === $product) {
+                    $item->setQuantity($item->getQuantity() + 1); // si le produit existe, on incrémente la quantité
+                } else {
+                    $cart->addCartItem(new CartItem($product, 1)); // sinon, on ajoute le produit au panier
+                }
+            }
+        }
+
 
         $em->flush();
         return $this->redirectToRoute('app_products'); // on retourne à la liste des produits

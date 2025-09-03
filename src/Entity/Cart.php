@@ -77,6 +77,12 @@ class Cart
         return $this;
     }
 
+    public function clearCartItems(): void{
+        foreach($this->cartItems as $item){
+            $this->removeCartItem($item);
+        }
+    }
+
     public function getTotal(): float{
         $total = 0;
         foreach($this->cartItems as $item){
