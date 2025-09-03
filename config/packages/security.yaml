@@ -32,6 +32,12 @@ security:
                 login_path: app_login
                 check_path: app_login
                 enable_csrf: true
+                username_parameter: 'login[username]'
+                password_parameter: 'login[password]'
+                csrf_parameter: 'login[_token]'
+                default_target_path: 'app_account'
+                always_use_default_target_path: true
+
             logout:
                 path: app_logout
                 # where to redirect after logout
