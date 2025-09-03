@@ -17,7 +17,7 @@ final class CartController extends AbstractController
     { //@todo ajout d'un isGranted
 
         $cart = $repository->findOneBy(['owner' => $this->getUser()]);
-        $cartItems = $cart->getCartItems();
+        $cartItems = $cart?->getCartItems();
 
         //@todo ajouter le service calcul de prix total (servira pour cart et order)
 

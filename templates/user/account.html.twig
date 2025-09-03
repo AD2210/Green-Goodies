@@ -3,45 +3,47 @@
 {% block title %}Mon compte{% endblock %}
 
 {% block body %}
-<section class="account-section">
-    <h1>Mon compte</h1>
-    <div class="account-card">
-        <h2>Mes commandes</h2>
-        <table class="order-table">
-            <thead>
-            <tr>
-                <th>N°</th>
-                <th>Date</th>
-                <th>Prix</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for order in orders %}
-                <tr>
-                    <td>{{ '%02d'|format(loop.index) }}</td>
-                    <td>{{ order.createdAt|date('d/m/Y') }}</td>
-                    <td>{{ order.total|number_format(2, ',', ' ') }} €</td>
-                </tr>
-            {% else %}
-                <tr>
-                    <td colspan="3">Aucune commande.</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-    </div>
-    <div class="account-card">
-        <h2>Mon accès API</h2>
-        <form action="{{ path('app_account_api_authorize') }}" method="post">
-            <button type="submit" class="btn-primary">Activer mon accès API</button>
-        </form>
-    </div>
-    <div class="account-card">
-        <h2>Supprimer mon compte</h2>
-        <form action="{{ path('app_account_delete') }}" method="post" onsubmit="return confirm('Êtes‑vous sûr de vouloir supprimer votre compte ?');">
-            {# @todo créer la route pour supprimer son compte #}
-            <button type="submit" class="btn-primary">Supprimer mon compte</button>
-        </form>
-    </div>
-</section>
+    <section class="account-section">
+        <div class="container">
+            <h1>Mon compte</h1>
+            <div class="account-card">
+                <h2>Mes commandes</h2>
+                <table class="order-table">
+                    <thead>
+                    <tr>
+                        <th>N°</th>
+                        <th>Date</th>
+                        <th>Prix</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for order in orders %}
+                        <tr>
+                            {#                    <td>{{ '%02d'|format(loop.index) }}</td> #}
+                            {#                    <td>{{ order.createdAt|date('d/m/Y') }}</td> #}
+                            {#                    <td>{{ order.total|number_format(2, ',', ' ') }} €</td> #}
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="3">Aucune commande.</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="account-card">
+                <h2>Mon accès API</h2>
+                <form action="{{ path('app_account_api_authorize') }}" method="post">
+                    <button type="submit" class="btn-primary">Activer mon accès API</button>
+                </form>
+            </div>
+            <div class="account-card">
+                <form action="{{ path('app_account_delete') }}" method="post"
+                      onsubmit="return confirm('Êtes‑vous sûr de vouloir supprimer votre compte ?');">
+                    {# @todo créer la route pour supprimer son compte #}
+                    <button type="submit" class="btn-primary">Supprimer mon compte</button>
+                </form>
+            </div>
+        </div>
+    </section>
 {% endblock %}

@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 final class UserController extends AbstractController
 {
@@ -15,10 +16,10 @@ final class UserController extends AbstractController
     public function showMyAccount(OrderRepository $orderRepository): Response
     {
         // @todo ajouter is granted pour géré l'accès
-        $orders = $orderRepository->findBy(['user' => $this->getUser()]);
+//        $orders = $orderRepository->findBy(['user' => $this->getUser()]);
 
         return $this->render('user/account.html.twig', [
-            'orders' => $orders,
+            'orders' => [],
         ]);
     }
 
@@ -32,5 +33,16 @@ final class UserController extends AbstractController
         $em->flush();
 
         return $this->redirectToRoute('app_account');
+    }
+
+    #[Route('/my_account/delete', name: 'app_account_delete')]
+    public function accountDelete(UserRepository $userRepository,EntityManagerInterface $em): Response
+    {
+        // @todo ajouter is granted pour géré l'accès
+        $user = $userRepository->findOneBy(['user' => $this->getUser()]);
+        $em->remove($user);
+        $em->flush();
+
+        return $this->redirectToRoute('app_products');
     }
 }
