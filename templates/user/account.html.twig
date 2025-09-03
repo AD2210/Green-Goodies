@@ -19,9 +19,9 @@
                     <tbody>
                     {% for order in orders %}
                         <tr>
-                            {#                    <td>{{ '%02d'|format(loop.index) }}</td> #}
-                            {#                    <td>{{ order.createdAt|date('d/m/Y') }}</td> #}
-                            {#                    <td>{{ order.total|number_format(2, ',', ' ') }} €</td> #}
+                             <td>{{ order.id }}</td>
+                            <td>{{ order.createdAt|date('d/m/Y') }}</td>
+                            <td>{{ order.total|number_format(2, ',', ' ') }} €</td>
                         </tr>
                     {% else %}
                         <tr>

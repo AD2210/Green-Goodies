@@ -26,7 +26,7 @@ class Order
     /**
      * @var Collection<int, OrderItem>
      */
-    #[ORM\OneToMany(targetEntity: OrderItem::class, mappedBy: 'orderRef', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: OrderItem::class, mappedBy: 'orderRef', orphanRemoval: true, cascade: ['persist', 'remove'])]
     private Collection $orderItems;
 
     public function __construct()
@@ -71,7 +71,7 @@ class Order
         return $this->orderItems;
     }
 
-    public function addOrderItem(OrderItem $orderItem): static // passer CartItem au lieu
+    public function addOrderItem(OrderItem $orderItem): static
     {
         if (!$this->orderItems->contains($orderItem)) {
             $this->orderItems->add($orderItem);
@@ -79,6 +79,29 @@ class Order
         }
 
         return $this;
+    }
+
+    public static function createOrderFromCart(Cart $cart): static
+    {
+        $order = new Order();
+        $order->setCreatedAt(new \DateTimeImmutable('now'));
+        $order->setOwner($cart->getOwner());
+        foreach($cart->getCartItems() as $cartItem){
+            $orderItem = new OrderItem();
+            $orderItem->setProduct($cartItem->getProduct());
+            $orderItem->setQuantity($cartItem->getQuantity());
+            $orderItem->setOrderRef($order);
+            $order->addOrderItem($orderItem);
+        }
+        return $order;
+    }
+
+    public function getTotal(): float{
+        $total = 0;
+        foreach($this->orderItems as $item){
+            $total += $item->getTotal();
+        }
+        return $total;
     }
 
     public function removeOrderItem(OrderItem $orderItem): static

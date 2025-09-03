@@ -18,17 +18,20 @@ final class OrderController extends AbstractController
     #[IsGranted('ROLE_USER')]
     public function createOrder(EntityManagerInterface $em, CartRepository $cartRepository): Response
     {
-        $order = new Order();
         $cart = $cartRepository->findOneBy(['owner' => $this->getUser()]);
-        $order->setOwner($this->getUser());
-        $order->addOrderItem($cart->getCartItems()); // necessite une convertion à traiter dans un service
+        $order = Order::createOrderFromCart($cart);
+        $em->persist($order);
+        $em->flush();
 
+        //$this->confirmOrder(); //On envoie le mail de confirmation de commande
+
+        $cart->clearCartItems();
+        $em->flush();
 
         return $this->redirectToRoute('app_products');
     }
 
-    #[Route('/order/confirm', name: 'app_order_confirm')]
-    public function confirmOrder(MailerInterface $mailer): Response
+    private function confirmOrder(MailerInterface $mailer): void
     { //@todo regarder comment utiliser mailer pour envoyer l'email
 //        $user = $this->getUser();
 //        $mailer->send(
@@ -38,6 +41,5 @@ final class OrderController extends AbstractController
 //            )
 //        )
 
-        return $this->redirectToRoute('app_products');
     }
 }
