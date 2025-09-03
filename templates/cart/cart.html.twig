@@ -17,21 +17,21 @@
                                 <div class="item-qty">Quantité : {{ item.quantity }}</div>
                                 <div
                                     class="item-price">{{ (item.total)|number_format(2, ',', ' ') }}
-                                     €
+                                    €
                                 </div>
                             </div>
                         </div>
                     {% else %}
                         <p>Votre panier est vide.</p>
                     {% endfor %}
-                    {% if cartItems|length > 0 %}
-                        <div class="cart-summary">
-                            <div>Total panier : {{ cart.total|number_format(2, ',', ' ') }} €</div>
-                            <small>Frais de livraison : Offert</small>
-                        </div>
-                        <a href="{{ path('app_order_create') }}" class="btn-primary">Valider la commande</a>
-                    {% endif %}
                 </div>
+                {% if cartItems|length > 0 %}
+                    <div class="cart-summary">
+                        <div>Total panier : <span class="total">{{ cart.total|number_format(2, ',', ' ') }} €</span></div>
+                        <small>Frais de livraison : Offert</small>
+                    </div>
+                    <a href="{{ path('app_order_create') }}" class="btn-primary">Valider la commande</a>
+                {% endif %}
             </div>
         </div>
     </section>

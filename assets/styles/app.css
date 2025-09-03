@@ -521,16 +521,28 @@ footer p{
 }
 
 .cart-item-details .item-price {
-    font-size: 16px;
+    font-size: 18px;
+    font-weight: 500;
 }
 
 .cart-summary {
+    background-color: #FFFDF7B2;
     text-align: right;
-    margin-top: 20px;
-    font-size: 16px;
+    padding: 20px 40px;
+    margin-top: 5px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.cart-summary .total {
+    font-size: 20px;
+    font-weight: 400;
 }
 
 .cart-summary small {
+    font-size: 12px;
+    font-weight: 400;
     display: block;
     color: var(--color-muted);
     margin-top: 4px;
