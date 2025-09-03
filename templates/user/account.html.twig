@@ -33,8 +33,15 @@
             </div>
             <div class="account-card">
                 <h2>Mon accès API</h2>
+
                 <form action="{{ path('app_account_api_authorize') }}" method="post">
-                    <button type="submit" class="btn-primary">Activer mon accès API</button>
+                    <button type="submit" class="btn-primary">
+                        {% if user.isApiAuthorized %}
+                        Activer mon accès API
+                        {% else %}
+                        Désactiver mon accès API
+                        {% endif %}
+                    </button>
                 </form>
             </div>
             <div class="account-card">
