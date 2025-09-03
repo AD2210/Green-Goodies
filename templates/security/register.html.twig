@@ -3,30 +3,42 @@
 {% block title %}Inscription{% endblock %}
 
 {% block body %}
-<section class="form-page">
-    <div class="form-image" style="background-image:url('{{ asset('images/register.jpg') }}');"></div>
+<section class="form-page container">
+    <img class="form-image" src="{{ asset('images/leaf.png') }}" alt="form-image">
     <div class="form-container">
-        <h1>Inscription</h1>
-        <p>Tous les champs sont obligatoires.</p>
-        <form method="post" action="{{ path('app_register') }}">
-            <label for="lastName">Nom</label>
-            <input type="text" id="lastName" name="lastName" required>
-            <label for="firstName">Prénom</label>
-            <input type="text" id="firstName" name="firstName" required>
-            <label for="email">Adresse email</label>
-            <input type="email" id="email" name="email" required>
-            <label for="password">Mot de passe</label>
-            <input type="password" id="password" name="password" required>
-            <label for="password_confirmation">Confirmation mot de passe</label>
-            <input type="password" id="password_confirmation" name="password_confirmation" required>
-            <div>
-                <input type="checkbox" id="terms" name="terms" required>
-                <label for="terms">J’accepte les CGU de GreenGoodies</label>
-            </div>
-            <button class="btn-primary" type="submit">S’inscrire</button>
-        </form>
+        <h1 class="register-title">Inscription</h1>
+        <span>Tous les champs sont obligatoires.</span>
+        {{ form_start(form) }}
+        {{ form_row(form.lastName, {
+            row_attr: { class : 'form-control'},
+            label_attr: { class: 'form-label' }
+        }) }}
+        {{ form_row(form.firstName, {
+            row_attr: { class : 'form-control'},
+            label_attr: { class: 'form-label' }
+        }) }}
+        {{ form_row(form.email, {
+            row_attr: { class : 'form-control'},
+            label_attr: { class: 'form-label' }
+        }) }}
+        {{ form_row(form.plainPassword.first, {
+            row_attr: { class : 'form-control'},
+            label_attr: { class: 'form-label' }
+        }) }}
+        {{ form_row(form.plainPassword.second, {
+            row_attr: { class : 'form-control'},
+            label_attr: { class: 'form-label' }
+        }) }}
+        {{ form_row(form.agreeTerms, {
+            row_attr: { class : 'form-checkbox'},
+            label_attr: { class: 'form-label' }
+        }) }}
+        {{ form_row(form.submit,{
+            attr: {class : 'btn-primary'}
+        }) }}
+        {{ form_end(form) }}
         <div class="helper-links">
-            Déjà un compte ? <a href="{{ path('app_login') }}">Se connecter</a>
+            <a href="{{ path('app_login') }}">Déjà un compte ? Se connecter</a>
         </div>
     </div>
 </section>
