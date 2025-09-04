@@ -70,15 +70,13 @@ class SecurityController extends AbstractController
             // generate a signed url and email it to the user
             $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
                 (new TemplatedEmail())
-                    ->from(new Address('mailer@grenn-goodies.com', 'Mail Bot'))
+                    ->from(new Address('no-reply@green-googies.test', 'Green Googies'))
                     ->to((string) $user->getEmail())
-                    ->subject('Please Confirm your Email')
+                    ->subject('Veuillez confirmer votre adresse e-mail')
                     ->htmlTemplate('security/confirmation_email.html.twig')
             );
 
-            // do anything else you need here, like send an email
-
-            return $security->login($user, 'form_login', 'main');
+            //return $security->login($user, 'form_login', 'main'); // On autorise pas la connexion tant que l'email n'est pas valider
         }
 
         return $this->render('security/register.html.twig', [
@@ -87,7 +85,7 @@ class SecurityController extends AbstractController
     }
 
     #[Route('/verify/email', name: 'app_verify_email')]
-    public function verifyUserEmail(Request $request, TranslatorInterface $translator, UserRepository $userRepository): Response
+    public function verifyUserEmail(Request $request, TranslatorInterface $translator, UserRepository $userRepository,Security $security): Response
     {
         $id = $request->query->get('id');
 
@@ -110,9 +108,9 @@ class SecurityController extends AbstractController
             return $this->redirectToRoute('app_register');
         }
 
-        // @TODO Change the redirect on success and handle or remove the flash message in your templates
-        $this->addFlash('success', 'Your email address has been verified.');
+        $this->addFlash('success', 'Votre email a été vérifié');
 
-        return $this->redirectToRoute('app_register');
+        $security->login($user, 'form_login', 'main');
+        return $this->redirectToRoute('app_account');
     }
 }
