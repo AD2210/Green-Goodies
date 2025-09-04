@@ -2,6 +2,12 @@
 
 {% block title %}Mon panier{% endblock %}
 
+{# On force le rafraichissement du cache du turbo pour eviter les lfash avec le précedent panier #}
+{% block head_extra %}
+    <meta name="turbo-cache-control" content="no-cache">
+    <meta name="turbo-visit-control" content="reload">
+{% endblock %}
+
 {% block body %}
     <section class="account-section cart-section">
         <div class="container">
