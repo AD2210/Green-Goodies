@@ -7,31 +7,87 @@
     <title>Confirmation de commande{% if order.id %} #{{ order.id }}{% endif %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
-        body { font-family: Arial, Helvetica, sans-serif; color:#222; }
-        .container { max-width: 640px; margin: 0 auto; padding: 16px; }
-        .header { border-bottom: 1px solid #eee; padding-bottom: 8px; margin-bottom: 16px; }
-        .brand { font-weight: bold; font-size: 18px; color: #2b6cb0; }
-        .order-meta { font-size: 14px; color:#666; margin-top: 8px; }
-        .items { width:100%; border-collapse: collapse; margin-top:16px; }
-        .items th, .items td { border-bottom:1px solid #eee; padding:8px; text-align:left; font-size: 14px; }
-        .total { text-align:right; font-weight:bold; font-size:16px; padding-top: 8px; }
-        .footer { margin-top: 24px; font-size: 12px; color:#666; }
-        .btn { display:inline-block; padding:10px 16px; background:#2b6cb0; color:white !important; text-decoration:none; border-radius:4px; }
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            color: #222;
+        }
+
+        .container {
+            max-width: 640px;
+            margin: 0 auto;
+            padding: 16px;
+        }
+
+        .header {
+            border-bottom: 1px solid #eee;
+            padding-bottom: 8px;
+            margin-bottom: 16px;
+            background: #FFFDF7;
+        }
+
+        .logo {
+            display: block;
+            height: 18px;
+            width: auto;
+            vertical-align: middle;
+        }
+
+        .order-meta {
+            font-size: 14px;
+            color: #666;
+            margin-top: 8px;
+            text-align: right;
+        }
+
+        .items {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 16px;
+        }
+
+        .items th, .items td {
+            border-bottom: 1px solid #eee;
+            padding: 8px;
+            text-align: left;
+            font-size: 14px;
+        }
+
+        .total {
+            text-align: right;
+            font-weight: bold;
+            font-size: 16px;
+            padding-top: 8px;
+        }
+
+        .footer {
+            margin-top: 24px;
+            font-size: 12px;
+            color: #666;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 16px;
+            background: #2b6cb0;
+            color: white !important;
+            text-decoration: none;
+            border-radius: 4px;
+        }
     </style>
 </head>
 <body>
 <div class="container">
     <div class="header">
-        <div class="brand">Green Googies</div>
+        <img src="{{ absolute_url(asset('images/Logo.jpg')) }}" alt="Green Googies" class="logo">
         <div class="order-meta">
             Confirmation de commande{% if order.id %} #{{ order.id }}{% endif %}<br>
             Date : {{ (order.createdAt ?? "now")|date('d/m/Y H:i') }}
         </div>
     </div>
 
-    <p>Bonjour {{ customerName }},</p>
+    <p>Bonjour {{ order.owner.firstName }},</p>
 
-    <p>Merci pour votre commande chez Green Googies ! Voici le récapitulatif :</p>
+    <p>Merci pour votre commande chez Green Googies !</p>
 
     <table class="items" role="presentation" aria-hidden="true">
         <thead>

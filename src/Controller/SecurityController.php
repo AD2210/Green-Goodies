@@ -76,7 +76,7 @@ class SecurityController extends AbstractController
                     ->htmlTemplate('security/confirmation_email.html.twig')
             );
 
-            //return $security->login($user, 'form_login', 'main'); // On autorise pas la connexion tant que l'email n'est pas valider
+            return $this->redirectToRoute('app_products');
         }
 
         return $this->render('security/register.html.twig', [
