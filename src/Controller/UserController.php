@@ -9,13 +9,14 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 final class UserController extends AbstractController
 {
     #[Route('/my_account', name: 'app_account')]
+    #[IsGranted('ROLE_USER')]
     public function showMyAccount(OrderRepository $orderRepository): Response
     {
-        // @todo ajouter is granted pour géré l'accès
         $user = $this->getUser();
         $orders = $orderRepository->findBy(['owner' => $user]);
 
@@ -26,10 +27,9 @@ final class UserController extends AbstractController
     }
 
     #[Route('/my_account/api_authorize', name: 'app_account_api_authorize')]
+    #[IsGranted('ROLE_USER')]
     public function apiAuthorize(EntityManagerInterface $em): Response
     {
-        // @todo ajouter is granted pour géré l'accès
-
         /** @var User $user */
         $user = $this->getUser();
 
@@ -47,9 +47,9 @@ final class UserController extends AbstractController
     }
 
     #[Route('/my_account/delete', name: 'app_account_delete')]
+    #[IsGranted('ROLE_USER')]
     public function accountDelete(UserRepository $userRepository,EntityManagerInterface $em): Response
     {
-        // @todo ajouter is granted pour géré l'accès
         $user = $userRepository->findOneBy(['user' => $this->getUser()]);
         $em->remove($user);
         $em->flush();

@@ -1,0 +1,71 @@
+{% set customerName = customer is defined and customer and customer.fullName is defined ? customer.fullName : (customer and customer.email ? customer.email : 'Client') %}
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Confirmation de commande{% if order.id %} #{{ order.id }}{% endif %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body { font-family: Arial, Helvetica, sans-serif; color:#222; }
+        .container { max-width: 640px; margin: 0 auto; padding: 16px; }
+        .header { border-bottom: 1px solid #eee; padding-bottom: 8px; margin-bottom: 16px; }
+        .brand { font-weight: bold; font-size: 18px; color: #2b6cb0; }
+        .order-meta { font-size: 14px; color:#666; margin-top: 8px; }
+        .items { width:100%; border-collapse: collapse; margin-top:16px; }
+        .items th, .items td { border-bottom:1px solid #eee; padding:8px; text-align:left; font-size: 14px; }
+        .total { text-align:right; font-weight:bold; font-size:16px; padding-top: 8px; }
+        .footer { margin-top: 24px; font-size: 12px; color:#666; }
+        .btn { display:inline-block; padding:10px 16px; background:#2b6cb0; color:white !important; text-decoration:none; border-radius:4px; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div class="brand">Green Googies</div>
+        <div class="order-meta">
+            Confirmation de commande{% if order.id %} #{{ order.id }}{% endif %}<br>
+            Date : {{ (order.createdAt ?? "now")|date('d/m/Y H:i') }}
+        </div>
+    </div>
+
+    <p>Bonjour {{ customerName }},</p>
+
+    <p>Merci pour votre commande chez Green Googies ! Voici le récapitulatif :</p>
+
+    <table class="items" role="presentation" aria-hidden="true">
+        <thead>
+        <tr>
+            <th>Produit</th>
+            <th>Qté</th>
+            <th style="text-align:right;">Total</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for item in items %}
+            <tr>
+                <td>{{ item.product.name }}</td>
+                <td>{{ item.quantity }}</td>
+                <td style="text-align:right;">{{ item.total|number_format(2, ',', ' ') }} €</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <p class="total">Total payé : {{ total|number_format(2, ',', ' ') }} €</p>
+
+    <p style="margin-top:16px;">
+        Vous recevrez un nouvel email lorsque votre commande sera expédiée.
+    </p>
+
+    <p style="margin-top:16px;">
+        <a class="btn" href="{{ absolute_url(path('app_products')) }}">Retourner sur le site</a>
+    </p>
+
+    <div class="footer">
+        Cet email a été envoyé automatiquement, merci de ne pas y répondre.<br>
+        Si vous avez des questions, contactez notre support.
+    </div>
+</div>
+</body>
+</html>
