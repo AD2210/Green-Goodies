@@ -118,27 +118,31 @@ class SecurityController extends AbstractController
     }
 
     #[Route('/verify/email/resend', name: 'app_verify_email_resend')]
-    public function resendVerificationEmail(): Response
+    public function resendVerificationEmail(Request $request, UserRepository $repository): Response
     {
-        /** @var User $user */
-        $user = $this->getUser();
-        if (!$user) {
-            $this->addFlash('warning', 'Veuillez vous connecter pour renvoyer l’e-mail de vérification.');
+
+        if (!$this->isCsrfTokenValid('resend_confirmation', $request->request->get('_token'))) {
+            $this->addFlash('error', 'Requête invalide.');
             return $this->redirectToRoute('app_login');
         }
 
-        if (method_exists($user, 'isVerified') && $user->isVerified()) {
-            $this->addFlash('info', 'Votre adresse e‑mail est déjà vérifiée.');
-            return $this->redirectToRoute('app_account');
-        }
+        $email = (string) $request->request->get('email', '');
+        if ($email !== '') {
+            $user = $repository->findOneBy(['email' => $email]);
 
-        $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
-            (new TemplatedEmail())
-                ->from(new Address('no-reply@green-googies.test', 'Green Googies'))
-                ->to((string) $user->getEmail())
-                ->subject('Veuillez confirmer votre adresse e‑mail')
-                ->htmlTemplate('security/confirmation_email.html.twig')
-        );
+            if ($user && !$user->isVerified()) {
+                $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
+                    (new TemplatedEmail())
+                        ->from(new Address('no-reply@green-googies.test', 'Green Googies'))
+                        ->to((string) $user->getEmail())
+                        ->subject('Veuillez confirmer votre adresse e‑mail')
+                        ->htmlTemplate('security/confirmation_email.html.twig')
+                );
+
+                $this->addFlash('success', 'Si un compte correspond, un nouvel email de confirmation a été envoyé.');
+                return $this->redirectToRoute('app_login');
+            }
+        }
 
         $this->addFlash('success', 'Un nouvel e‑mail de vérification vient de vous être envoyé.');
         return $this->redirectToRoute('app_products');
