@@ -62,11 +62,11 @@ symfony serve -d
 
 2.a - Acceder au site
 
-`https://127.0.0.1:8000`
+[https://127.0.0.1:8000](https://127.0.0.1:8000)
 
 2.b - Acceder à la documentation de l'API et l'interface Swagger UI
 
- `https://127.0.0.1:8000/api/doc`
+[https://127.0.0.1:8000/api/doc](https://127.0.0.1:8000/api/doc)
 
 2.c - Acceder à la boite mail de test
 
@@ -75,7 +75,7 @@ symfony serve -d
 > si c'est le cas, il faut vérifier le port mappé par docker, exemple : `[port-docker]:8025`
 > et remplacer le port 8025 dans l'adresse ci-dessous par le port-docker
 
-`http://localhost:8025`
+[http://localhost:8025](http://localhost:8025)
 
 3 - Pour vous logger :
 
