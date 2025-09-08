@@ -6,7 +6,7 @@ Green goodies est un site ecommerce pour la vente de produit eco-responsable, le
 ## Versions Utilisées
 
 Ce projet a été developper avec Symfony 7.3 sous php 8.4,
-toutes versions antérieures ne garantissent pas le fonctionnement de l'application
+toutes versions antérieures ne garantissent pas le fonctionnement de l'application.
 
 Pour les besoins du projet un container docker est utilisé pour la base donnée ainsi que pour le serveur mail.
 Il est paramétré dans `compose.yaml` et dans `compose.override.yaml`
@@ -69,6 +69,11 @@ symfony serve -d
  `https://127.0.0.1:8000/api/doc`
 
 2.c - Acceder à la boite mail de test
+
+> [!NOTE]
+> il est possible que docker n'expose pas correctement le port 8025 pour l'accès à la boite mail
+> si c'est le cas, il faut vérifier le port mappé par docker, exemple : `[port-docker]:8025`
+> et remplacer le port 8025 dans l'adresse ci-dessous par le port-docker
 
 `http://localhost:8025`
 
