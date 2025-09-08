@@ -24,6 +24,30 @@ nelmio_api_doc:
                                 application/json:
                                     schema:
                                         $ref: '#/components/schemas/Token'
+                        '401':
+                            description: Identifiants invalides
+                            content:
+                                application/json:
+                                    schema:
+                                        $ref: '#/components/schemas/Error'
+                                    examples:
+                                        invalid_credentials:
+                                            summary: Identifiants invalides
+                                            value:
+                                                status: 401
+                                                message: "Identifiants invalides."
+                        '403':
+                            description: Accès API non activé
+                            content:
+                                application/json:
+                                    schema:
+                                        $ref: '#/components/schemas/Error'
+                                    examples:
+                                        api_disabled:
+                                            summary: Accès API non activé
+                                            value:
+                                                status: 403
+                                                message: "Votre accès API n’est pas activé."
         components:
             schemas:
                 Token:
@@ -41,6 +65,15 @@ nelmio_api_doc:
                         password:
                             type: string
                             default: password123
+                Error:
+                    type: object
+                    properties:
+                        status:
+                            type: integer
+                            example: 403
+                        message:
+                            type: string
+                            example: "Votre accès API n’est pas activé."
             securitySchemes:
                 bearerAuth:
                     type: apiKey

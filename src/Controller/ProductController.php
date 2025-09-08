@@ -3,14 +3,19 @@
 namespace App\Controller;
 
 use App\Entity\Product;
+use App\Entity\User;
 use App\Repository\ProductRepository;
+use App\Repository\UserRepository;
+use Nelmio\ApiDocBundle\Attribute\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\CurrentUser;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Serializer\SerializerInterface;
-use Nelmio\ApiDocBundle\Annotation\Model;
 use OpenApi\Attributes as OA;
 
 #[OA\Tag(name: 'Products')]
@@ -37,6 +42,8 @@ final class ProductController extends AbstractController
         ]);
     }
 
+    #[Route('/api/products', name: 'app_api_products', methods: ['GET'])]
+    #[IsGranted('ROLE_USER_VERIFIED')]
     #[OA\Get(
         path: '/api/products',
         summary: 'Liste des produits',
@@ -51,7 +58,10 @@ final class ProductController extends AbstractController
                         properties: [
                             new OA\Property(property: 'id', type: 'integer', example: 1),
                             new OA\Property(property: 'name', type: 'string', example: 'Cookie Choco'),
+                            new OA\Property(property: 'shortDescription', type: 'string', example: 'Un cookie au chocolat'),
+                            new OA\Property(property: 'longDescription', type: 'string', example: 'Un cookie au chocolat extra'),
                             new OA\Property(property: 'price', type: 'number', format: 'float', example: 3.5),
+                            new OA\Property(property: 'picture', type: 'string', example: 'https://example.com/cookie-choco.jpg'),
                         ],
                         type: 'object'
                     )
@@ -62,9 +72,11 @@ final class ProductController extends AbstractController
             new OA\Response(response: 500, description: 'Erreur serveur')
         ]
     )]
-    #[Route('/api/products', name: 'app_api_products', methods: ['GET'])]
-    public function getProducts(ProductRepository $repository, SerializerInterface $serializer): JsonResponse
-    { //@todo completer la route avec gestion d'erreur + doc api
+    public function getProducts(#[CurrentUser] ?User $user, ProductRepository $repository, SerializerInterface $serializer): JsonResponse
+    {
+        if (!$user->isApiAuthorized()) {
+            return $this->json(['message' => "Votre accès API n'est pas activé."], Response::HTTP_FORBIDDEN);
+        }
         $products = $repository->findAll();
 
         $jsonProducts = $serializer->serialize($products, 'json');

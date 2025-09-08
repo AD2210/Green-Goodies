@@ -17,17 +17,16 @@ class Product
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $shortDescription = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $longDescription = null;
     #[ORM\Column]
     private ?float $price = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $picture = null;
-
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private ?string $longDescription = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $shortDescription = null;
 
     public function getId(): ?int
     {
