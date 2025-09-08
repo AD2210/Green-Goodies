@@ -23,9 +23,10 @@ class AppFixtures extends Fixture
         $user = new User();
         $user->setEmail('exemple@greengoodies.com');
         $user->setPassword($this->hasher->hashPassword($user,'password123'));
-        $user->setRoles(['ROLE_USER']);
+        $user->setRoles(['ROLE_USER', 'ROLE_USER_VERIFIED']);
         $user->setFirstName('User');
         $user->setLastName('Googies');
+        $user->setIsVerified(true);
         $manager->persist($user);
 
         //Création de plusieurs produits

@@ -83,6 +83,11 @@ user : `exemple@greengoodies.com`
 
 mot de passe : `password123`
 
+4 - Inscription :
+
+La vérification de l'adresse email est obligatoire pour l'inscription.
+Si vous avez des difficultés d'accès à la boite mail, vous pouvez utiliser le profiler (rubrique : Emails) pour cliquer sur le lien d'activation
+
 ## License
 
 Ce projet est réalisé dans le cadre d'une formation OpenClassroom
