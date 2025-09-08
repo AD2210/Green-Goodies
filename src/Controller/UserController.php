@@ -14,7 +14,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 final class UserController extends AbstractController
 {
     #[Route('/my_account', name: 'app_account')]
-    #[IsGranted('ROLE_USER')]
+    #[IsGranted('ROLE_USER_VERIFIED', message: 'Vous n\'avez pas de compte ou votre email n\'est pas encore vérifié')]
     public function showMyAccount(OrderRepository $orderRepository): Response
     {
         $user = $this->getUser();
@@ -27,7 +27,7 @@ final class UserController extends AbstractController
     }
 
     #[Route('/my_account/api_authorize', name: 'app_account_api_authorize')]
-    #[IsGranted('ROLE_USER')]
+    #[IsGranted('ROLE_USER_VERIFIED', message: 'Vous n\'avez pas de compte ou votre email n\'est pas encore vérifié')]
     public function apiAuthorize(EntityManagerInterface $em): Response
     {
         /** @var User $user */
@@ -47,7 +47,7 @@ final class UserController extends AbstractController
     }
 
     #[Route('/my_account/delete', name: 'app_account_delete')]
-    #[IsGranted('ROLE_USER')]
+    #[IsGranted('ROLE_USER_VERIFIED', message: 'Vous n\'avez pas de compte ou votre email n\'est pas encore vérifié')]
     public function accountDelete(UserRepository $userRepository,EntityManagerInterface $em): Response
     {
         $user = $userRepository->findOneBy(['user' => $this->getUser()]);

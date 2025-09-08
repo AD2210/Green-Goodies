@@ -15,7 +15,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 final class CartController extends AbstractController
 {
     #[Route('/cart', name: 'app_cart')]
-    #[IsGranted('ROLE_USER')]
+    #[IsGranted('ROLE_USER_VERIFIED', message: 'Vous n\'avez pas de compte ou votre email n\'est pas encore vérifié')]
     public function index(CartRepository $repository): Response
     {
         $cart = $repository->findOneBy(['owner' => $this->getUser()]);
@@ -28,7 +28,7 @@ final class CartController extends AbstractController
     }
 
     #[Route('/cart/add/{id}', name: 'app_cart_add')]
-    #[IsGranted('ROLE_USER')]
+    #[IsGranted('ROLE_USER_VERIFIED', message: 'Vous n\'avez pas de compte ou votre email n\'est pas encore vérifié')]
     public function addToCart(Product $product, EntityManagerInterface $em, CartRepository $cartRepository): Response
     {
         // on récupère le panier en cours si non, on en créer un nouveau
@@ -64,7 +64,7 @@ final class CartController extends AbstractController
     }
 
     #[Route('/cart/clear', name: 'app_cart_clear')]
-    #[IsGranted('ROLE_USER')]
+    #[IsGranted('ROLE_USER_VERIFIED', message: 'Vous n\'avez pas de compte ou votre email n\'est pas encore vérifié')]
     public function clearCart(EntityManagerInterface $em, CartRepository $cartRepository): Response
     {
         $cart = $cartRepository->findOneBy(['owner' => $this->getUser()]);

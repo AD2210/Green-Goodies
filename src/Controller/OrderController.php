@@ -16,7 +16,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 final class OrderController extends AbstractController
 {
     #[Route('/order/create', name: 'app_order_create')]
-    #[IsGranted('ROLE_USER')]
+    #[IsGranted('ROLE_USER_VERIFIED', message: 'Vous n\'avez pas de compte ou votre email n\'est pas encore vérifié')]
     public function createOrder(EntityManagerInterface $em, CartRepository $cartRepository, OrderMailer $orderMailer): Response
     {
         $cart = $cartRepository->findOneBy(['owner' => $this->getUser()]);

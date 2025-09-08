@@ -113,4 +113,32 @@ class SecurityController extends AbstractController
         $security->login($user, 'form_login', 'main');
         return $this->redirectToRoute('app_account');
     }
+
+    #[Route('/verify/email/resend', name: 'app_verify_email_resend')]
+    public function resendVerificationEmail(): Response
+    {
+        /** @var User $user */
+        $user = $this->getUser();
+        if (!$user) {
+            $this->addFlash('warning', 'Veuillez vous connecter pour renvoyer l’e-mail de vérification.');
+            return $this->redirectToRoute('app_login');
+        }
+
+        if (method_exists($user, 'isVerified') && $user->isVerified()) {
+            $this->addFlash('info', 'Votre adresse e‑mail est déjà vérifiée.');
+            return $this->redirectToRoute('app_account');
+        }
+
+        $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
+            (new TemplatedEmail())
+                ->from(new Address('no-reply@green-googies.test', 'Green Googies'))
+                ->to((string) $user->getEmail())
+                ->subject('Veuillez confirmer votre adresse e‑mail')
+                ->htmlTemplate('security/confirmation_email.html.twig')
+        );
+
+        $this->addFlash('success', 'Un nouvel e‑mail de vérification vient de vous être envoyé.');
+        return $this->redirectToRoute('app_products');
+    }
+
 }
