@@ -297,6 +297,18 @@ footer p{
     align-items: stretch;
 }
 
+.alert{
+    padding: 10px;
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    margin-bottom: 10px;
+}
+
+.resend-email {
+    padding-bottom: 24px;
+}
+
 .form-page .form-image {
     width: 734px;
     height: 988px;

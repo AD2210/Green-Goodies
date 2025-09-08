@@ -7,6 +7,23 @@
         <img class="form-image" src="{{ asset('images/tree.png') }}" alt="Login">
         <div class="form-container">
             <h1>Connexion</h1>
+            {% if error %}
+                <div class="alert" role="alert">
+                    {{ error.messageKey|trans(error.messageData, 'security') }}
+                </div>
+
+                {# Si on a un email saisi, proposer le renvoi du mail #}
+                {% if last_username %}
+                    <form action="{{ path('app_verify_email_resend') }}" method="post" class="resend-email">
+                        <input type="hidden" name="_token" value="{{ csrf_token('resend_confirmation') }}">
+                        <input type="hidden" name="email" value="{{ last_username }}">
+                        <button type="submit" class="btn-primary">
+                            Renvoyer l’email de confirmation
+                        </button>
+                    </form>
+                {% endif %}
+            {% endif %}
+
             {{ form_start(form) }}
             {{ form_row(form.username, {
                 row_attr: { class : 'form-control'},

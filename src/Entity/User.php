@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
@@ -22,6 +23,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 180)]
+    #[Assert\Email(groups: ['registration', 'login'])]
+    #[Assert\NotBlank(groups: ['registration', 'login'])]
     private ?string $email = null;
 
     /**
@@ -37,9 +40,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $password = null;
 
     #[ORM\Column(length: 120)]
+    #[Assert\NotBlank(groups: ['registration'])]
     private ?string $firstName = null;
 
     #[ORM\Column(length: 120)]
+    #[Assert\NotBlank(groups: ['registration'])]
     private ?string $lastName = null;
 
     #[ORM\OneToOne(mappedBy: 'owner', cascade: ['persist', 'remove'])]
@@ -55,6 +60,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private bool $isApiAuthorized = false;
 
     #[ORM\Column]
+    #[Assert\IsTrue(message: 'Votre email n\'est pas vérifié', groups: ['login'])]
     private bool $isVerified = false;
 
     public function __construct()
@@ -86,7 +92,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getUserIdentifier(): string
     {
-        return (string) $this->email;
+        return (string)$this->email;
     }
 
     /**
@@ -131,7 +137,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function __serialize(): array
     {
-        $data = (array) $this;
+        $data = (array)$this;
         $data["\0" . self::class . "\0password"] = hash('crc32c', $this->password);
 
         return $data;
