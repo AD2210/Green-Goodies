@@ -36,7 +36,6 @@ class SecurityController extends AbstractController
 
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
-        dump($lastUsername, $error);
 
         $form = $this->createForm(LoginType::class);
 

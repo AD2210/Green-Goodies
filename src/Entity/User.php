@@ -37,6 +37,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The hashed password
      */
     #[ORM\Column]
+    //Validator gérer dans le form car pas la même propriété que le champ password (plainPassword)
     private ?string $password = null;
 
     #[ORM\Column(length: 120)]
@@ -60,7 +61,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private bool $isApiAuthorized = false;
 
     #[ORM\Column]
-    #[Assert\IsTrue(message: 'Votre email n\'est pas vérifié', groups: ['login'])]
+    // accès restreint avec Security\UserChecker
     private bool $isVerified = false;
 
     public function __construct()
