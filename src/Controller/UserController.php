@@ -54,6 +54,6 @@ final class UserController extends AbstractController
         $em->remove($user);
         $em->flush();
 
-        return $this->redirectToRoute('app_products');
+        return $this->redirectToRoute('app_products',['flash_type'=>'success', 'flash_message'=>'Votre compte a bien été supprimer']);
     }
 }

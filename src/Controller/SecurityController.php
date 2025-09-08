@@ -143,9 +143,7 @@ class SecurityController extends AbstractController
                 return $this->redirectToRoute('app_login');
             }
         }
-
-        $this->addFlash('success', 'Un nouvel e‑mail de vérification vient de vous être envoyé.');
-        return $this->redirectToRoute('app_products');
+        $this->addFlash('error', 'votre adresse mail n\'est pas valide');
+        return $this->redirectToRoute('app_login');
     }
-
 }

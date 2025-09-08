@@ -8,8 +8,6 @@ use App\Service\OrderMailer;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Mailer\Envelope;
-use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
@@ -29,6 +27,6 @@ final class OrderController extends AbstractController
         $cart->clearCartItems();
         $em->flush();
 
-        return $this->redirectToRoute('app_products');
+        return $this->redirectToRoute('app_products',['flash_type'=>'success', 'flash_message'=>'votre commande est accepté, vous aller recevoir un email de confirmation']);
     }
 }

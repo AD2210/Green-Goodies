@@ -58,9 +58,8 @@ final class CartController extends AbstractController
             }
         }
 
-
         $em->flush();
-        return $this->redirectToRoute('app_products'); // on retourne à la liste des produits
+        return $this->redirectToRoute('app_products',['flash_type'=>'success', 'flash_message'=>'Le produit à bien été ajouter au panier']); // on retourne à la liste des produits
     }
 
     #[Route('/cart/clear', name: 'app_cart_clear')]

@@ -36,7 +36,7 @@
 
                 <form action="{{ path('app_account_api_authorize') }}" method="post">
                     <button type="submit" class="btn-primary">
-                        {% if user.isApiAuthorized %}
+                        {% if not user.isApiAuthorized %}
                         Activer mon accès API
                         {% else %}
                         Désactiver mon accès API

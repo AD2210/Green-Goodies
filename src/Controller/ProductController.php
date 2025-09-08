@@ -6,6 +6,7 @@ use App\Entity\Product;
 use App\Repository\ProductRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -13,8 +14,12 @@ use Symfony\Component\Serializer\SerializerInterface;
 final class ProductController extends AbstractController
 {
     #[Route('/', name: 'app_products')]
-    public function indexProducts(ProductRepository $repository): Response
+    public function indexProducts(ProductRepository $repository,Request $request): Response
     {
+        if ($request->query->has('flash_type')) {
+            $this->addFlash($request->query->get('flash_type'), $request->query->get('flash_message'));
+        }
+
         $products = $repository->findAll();
         return $this->render('product/index.html.twig', [
             'products' => $products,
