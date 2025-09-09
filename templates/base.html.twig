@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Green Goodies{% endblock %}</title>
-    <link rel="stylesheet" href="{{ asset('build/app.css') }}">
+{#    <link rel="stylesheet" href="{{ asset('build/app.css') }}">#}
     {% block javascripts %}
         {% block importmap %}{{ importmap('app') }}{% endblock %}
     {% endblock %}
@@ -14,7 +14,7 @@
 <header>
     <div class="container">
         <div class="header-container">
-            <img src="{{ asset('images/Logo.png') }}" alt="Green Goodies">
+            <img src="{{ asset('images/Logo.webp') }}" alt="Green Goodies">
             <nav>
                 <ul class="nav-links">
                     <li><a href="{{ path('app_products') }}">Nos produits</a></li>

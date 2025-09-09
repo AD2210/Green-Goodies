@@ -78,7 +78,7 @@
 <body>
 <div class="container">
     <div class="header">
-        <img src="{{ absolute_url(asset('images/Logo.jpg')) }}" alt="Green Googies" class="logo">
+        <img src="{{ absolute_url(asset('images/Logo.webp')) }}" alt="Green Googies" class="logo">
         <div class="order-meta">
             Confirmation de commande{% if order.id %} #{{ order.id }}{% endif %}<br>
             Date : {{ (order.createdAt ?? "now")|date('d/m/Y H:i') }}

@@ -25,7 +25,7 @@ composer install
 
 3 - Copier le fichier _.env_ et renommer le en _.env.local_
 
-4 - Démarrer docker et votre système de base de donnée
+4 - Démarrer docker et lancer le container avec votre système de base de donnée
 
 ```bash
 docker compose up -d --build

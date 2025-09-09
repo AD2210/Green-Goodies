@@ -32,7 +32,7 @@
                 </table>
             </div>
             <div class="account-card">
-                <h2>Mon accès API</h2>
+                <h2>Mon accès API</h2>
 
                 <form action="{{ path('app_account_api_authorize') }}" method="post">
                     <button type="submit" class="btn-primary">
@@ -46,8 +46,7 @@
             </div>
             <div class="account-card">
                 <form action="{{ path('app_account_delete') }}" method="post"
-                      onsubmit="return confirm('Êtes‑vous sûr de vouloir supprimer votre compte ?');">
-                    {# @todo créer la route pour supprimer son compte #}
+                      onsubmit="return confirm('Êtes‑vous sûr de vouloir supprimer votre compte ?');">
                     <button type="submit" class="btn-primary">Supprimer mon compte</button>
                 </form>
             </div>
