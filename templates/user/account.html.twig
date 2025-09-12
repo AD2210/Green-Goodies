@@ -46,7 +46,8 @@
             </div>
             <div class="account-card">
                 <form action="{{ path('app_account_delete') }}" method="post"
-                      onsubmit="return confirm('Êtes‑vous sûr de vouloir supprimer votre compte ?');">
+                      onsubmit="return confirm('Êtes‑vous sûr de vouloir supprimer votre compte ?');"
+                data-turbo="false">
                     <button type="submit" class="btn-primary">Supprimer mon compte</button>
                 </form>
             </div>

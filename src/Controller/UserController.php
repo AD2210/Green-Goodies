@@ -7,6 +7,7 @@ use App\Repository\OrderRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
@@ -48,9 +49,10 @@ final class UserController extends AbstractController
 
     #[Route('/my_account/delete', name: 'app_account_delete')]
     #[IsGranted('ROLE_USER_VERIFIED', message: 'Vous n\'avez pas de compte ou votre email n\'est pas encore vérifié')]
-    public function accountDelete(UserRepository $userRepository,EntityManagerInterface $em): Response
+    public function accountDelete(UserRepository $userRepository,EntityManagerInterface $em, Security $security): Response
     {
-        $user = $userRepository->findOneBy(['user' => $this->getUser()]);
+        $user = $userRepository->find($this->getUser()->getId());
+        $security->logout(false);
         $em->remove($user);
         $em->flush();
 
