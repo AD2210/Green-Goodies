@@ -81,6 +81,12 @@ class Order
         return $this;
     }
 
+    /**
+     * Créer une commande à partir d'un panier.
+     *
+     * @param Cart $cart le panier
+     * @return static
+     */
     public static function createOrderFromCart(Cart $cart): static
     {
         $order = new Order();
@@ -96,6 +102,11 @@ class Order
         return $order;
     }
 
+    /**
+     * Calculer le total de la commande.
+     *
+     * @return float
+     */
     public function getTotal(): float{
         $total = 0;
         foreach($this->orderItems as $item){

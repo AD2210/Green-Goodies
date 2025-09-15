@@ -77,12 +77,22 @@ class Cart
         return $this;
     }
 
+    /**
+     * Vider le panier.
+     *
+     * @return void
+     */
     public function clearCartItems(): void{
         foreach($this->cartItems as $item){
             $this->removeCartItem($item);
         }
     }
 
+    /**
+     * Calculer le total du panier.
+     *
+     * @return float
+     */
     public function getTotal(): float{
         $total = 0;
         foreach($this->cartItems as $item){

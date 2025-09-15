@@ -47,6 +47,11 @@ abstract class AbstractItem
         return $this;
     }
 
+    /**
+     * Calcul le total des items
+     *
+     * @return float
+     */
     public function getTotal(): float
     {
         return $this->quantity * $this->product->getPrice();

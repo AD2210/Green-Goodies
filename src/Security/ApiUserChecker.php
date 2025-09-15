@@ -8,6 +8,12 @@ use Symfony\Component\Security\Core\Exception\CustomUserMessageAccountStatusExce
 use Symfony\Component\Security\Core\User\UserCheckerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
+/**
+ * Vérifie l'état d'authentification de l'utilisateur avant et après la connexion.
+ *
+ * Cette implémentation vérifie que l'utilisateur est autorisé pour l'accès API et
+ * possède un compte vérifié durant les contrôles de pré-authentification.
+ */
 class ApiUserChecker implements UserCheckerInterface
 {
     public function checkPreAuth(UserInterface $user): void

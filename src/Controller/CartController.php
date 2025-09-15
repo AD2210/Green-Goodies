@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Cart;
 use App\Entity\CartItem;
 use App\Entity\Product;
+use App\Entity\User;
 use App\Repository\CartRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -31,11 +32,13 @@ final class CartController extends AbstractController
     #[IsGranted('ROLE_USER_VERIFIED', message: 'Vous n\'avez pas de compte ou votre email n\'est pas encore vérifié')]
     public function addToCart(Product $product, EntityManagerInterface $em, CartRepository $cartRepository): Response
     {
-        // on récupère le panier en cours si non, on en créer un nouveau
-        $cart = $cartRepository->findOneBy(['owner' => $this->getUser()]);
+        // on récupère le panier en cours sinon, on en crée un nouveau
+        $user = $this->getUser();
+        $cart = $cartRepository->findOneBy(['owner' => $user]);
         if ($cart === null) {
             $cart = new Cart();
-            $cart->setOwner($this->getUser());
+            /** @var User $user */
+            $cart->setOwner($user);
             $em->persist($cart);
         }
 
@@ -43,7 +46,7 @@ final class CartController extends AbstractController
         $cardtItems = $cart->getCartItems();
 
         if (empty($cardtItems->toArray())) {
-            $cart->addCartItem(new CartItem($product, 1)); // si le panier est vide, on ajoute le produit au panier
+            $cart->addCartItem(new CartItem($product, 1)); // si le panier est vide, on l'ajoute le produit au panier
         } else {
             $checkItem = false;
             foreach ($cardtItems as $item) {
@@ -54,12 +57,14 @@ final class CartController extends AbstractController
                 }
             }
             if (!$checkItem) {
-                $cart->addCartItem(new CartItem($product, 1));
+                $cart->addCartItem(new CartItem($product, 1)); // si le produit n'existe pas, on l'ajoute le produit au panier
             }
         }
 
         $em->flush();
-        return $this->redirectToRoute('app_products',['flash_type'=>'success', 'flash_message'=>'Le produit à bien été ajouter au panier']); // on retourne à la liste des produits
+
+        $this->addFlash('success','Le produit à bien été ajouter au panier');
+        return $this->redirectToRoute('app_products');
     }
 
     #[Route('/cart/clear', name: 'app_cart_clear')]

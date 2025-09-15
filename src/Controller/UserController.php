@@ -16,6 +16,13 @@ final class UserController extends AbstractController
 {
     #[Route('/my_account', name: 'app_account')]
     #[IsGranted('ROLE_USER_VERIFIED', message: 'Vous n\'avez pas de compte ou votre email n\'est pas encore vérifié')]
+    /**
+     * Affiche la page "Mon compte" avec la liste des commandes de l'utilisateur connecté.
+     *
+     * @param OrderRepository $orderRepository Référentiel pour récupérer les commandes de l'utilisateur.
+     *
+     * @return Response Réponse HTTP affichant la page de compte utilisateur.
+     */
     public function showMyAccount(OrderRepository $orderRepository): Response
     {
         $user = $this->getUser();
@@ -29,12 +36,19 @@ final class UserController extends AbstractController
 
     #[Route('/my_account/api_authorize', name: 'app_account_api_authorize')]
     #[IsGranted('ROLE_USER_VERIFIED', message: 'Vous n\'avez pas de compte ou votre email n\'est pas encore vérifié')]
+    /**
+     * Active ou désactive l'autorisation d'accès API pour l'utilisateur connecté puis redirige vers le compte.
+     *
+     * @param EntityManagerInterface $em Gestionnaire d'entités pour persister la modification.
+     *
+     * @return Response Réponse HTTP de redirection vers la page de compte.
+     */
     public function apiAuthorize(EntityManagerInterface $em): Response
     {
         /** @var User $user */
         $user = $this->getUser();
 
-        // toggle bool isApiAuthorized
+        // on change l'état du bool isApiAuthorized
         if ($user->isApiAuthorized() === false) {
             $user->setIsApiAuthorized(true);
         }else {
@@ -49,13 +63,23 @@ final class UserController extends AbstractController
 
     #[Route('/my_account/delete', name: 'app_account_delete')]
     #[IsGranted('ROLE_USER_VERIFIED', message: 'Vous n\'avez pas de compte ou votre email n\'est pas encore vérifié')]
+    /**
+     * Supprime le compte utilisateur courant, déconnecte l'utilisateur et redirige vers la liste des produits.
+     *
+     * @param UserRepository $userRepository Référentiel pour charger l'utilisateur depuis la base de données.
+     * @param EntityManagerInterface $em Gestionnaire d'entités pour supprimer l'utilisateur.
+     * @param Security $security Service de sécurité pour effectuer le logout programmatique.
+     *
+     * @return Response Réponse HTTP de redirection après suppression du compte.
+     */
     public function accountDelete(UserRepository $userRepository,EntityManagerInterface $em, Security $security): Response
     {
         $user = $userRepository->find($this->getUser()->getId());
-        $security->logout(false);
+        $security->logout(false); // Logout de l'utilisateur, csrf désactivé pour la suppression du compte
         $em->remove($user);
         $em->flush();
 
-        return $this->redirectToRoute('app_products',['flash_type'=>'success', 'flash_message'=>'Votre compte a bien été supprimer']);
+        $this->addFlash('success', 'Votre compte a bien été supprimer');
+        return $this->redirectToRoute('app_products');
     }
 }
